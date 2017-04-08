@@ -1,25 +1,33 @@
 import re
 from collections import Counter
+from db.models import WordFrequency
 
-def words(text): return re.findall(r'\w+', text.lower())
+def words(text):
+    return re.findall(r'\w+', text.lower())
 
-WORDS = Counter(words(open('texts/big.txt').read()))
+WORDS = words(open('texts/no_swears.txt').read())
 
-def P(word, N=sum(WORDS.values())): 
+"""def P(word, N=sum(WORDS.values())): 
     "Probability of `word`."
     return WORDS[word] / N
-
+"""
 def correction(word): 
     "Most probable spelling correction for word."
-    return max(candidates(word), key=P)
+    return (known([word]) or known(edits1(word)) or known(edits2(word)))
 
-def candidates(word): 
+'''def candidates(word): 
     "Generate possible spelling corrections for word."
     return (known([word]) or known(edits1(word)) or known(edits2(word)) or [word])
-
+'''
 def known(words): 
     "The subset of `words` that appear in the dictionary of WORDS."
-    return set(w for w in words if w in WORDS)
+    known_words = WordFrequency.objects.filter(word__in=words)
+    try:
+        first = WordFrequency.objects.filter(word__in=words).first().word
+        return  first
+    except Exception:
+        return []
+    #return set(w for w in words if w in WORDS)
 
 def edits1(word):
     "All edits that are one edit away from `word`."
