@@ -13,7 +13,7 @@ WORDS = words(open('texts/no_swears.txt').read())
 """
 def correction(word): 
     "Most probable spelling correction for word."
-    return (known([word]) or known(edits1(word)) or known(edits2(word) or [word]))
+    return (known([word]) or known(edits1(word)) or known(edits2(word)) or word)
 
 '''def candidates(word): 
     "Generate possible spelling corrections for word."
@@ -26,7 +26,8 @@ def known(words):
         first = WordFrequency.objects.filter(word__in=words).first().word
         return  first
     except Exception:
-        return words[0]
+        pass
+        #return words[0]
     #return set(w for w in words if w in WORDS)
 
 def edits1(word):
