@@ -8,6 +8,8 @@ class SpellCorrectorView(APIView):
     def get(self, request, *args, **kwargs):
         text = request.GET['text']
         input_words = words(text)
+        print input_words 
+        
         correct_words = []
         for word in input_words:
             correct_words.append(correction(word))
@@ -16,5 +18,4 @@ class SpellCorrectorView(APIView):
             correct_text = " ".join(correct_words)
         print correct_words 
         return Response({"Correct Text" : correct_text})
-
-
+    
