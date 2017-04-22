@@ -13,13 +13,27 @@ WORDS = words(open('texts/no_swears.txt').read())
 """
 def correction(word): 
     "Most probable spelling correction for word."
-    return (known([word]) or known(edits1(word)) or known(edits2(word)) or word)
+    return (first_known([word]) or first_known(edits1(word)) or first_known(edits2(word)) or word)
 
 '''def candidates(word): 
     "Generate possible spelling corrections for word."
     return (known([word]) or known(edits1(word)) or known(edits2(word)) or [word])
 '''
-def known(words): 
+def extended_corrections(word):
+    if known(edits1(word)):
+        corrections = known(edits1(word))
+    #if known(edits2(word)):
+    #  corrections.append(known(edits2(word)))
+    return corrections
+
+def known(words):
+    word_list = []
+    known = WordFrequency.objects.filter(word__in=words)
+    for w in known:
+        word_list.append(w.word)
+    return word_list
+
+def first_known(words):
     "The subset of `words` that appear in the dictionary of WORDS."
     known_words = WordFrequency.objects.filter(word__in=words)
     try:
