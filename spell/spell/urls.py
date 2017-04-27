@@ -1,6 +1,6 @@
 from django.conf.urls import include, url
 from django.contrib import admin
-from api.views import SpellCorrectorView
+from api.views import SpellCorrectorView, FeedbackView
 
 urlpatterns = [
     # Examples:
@@ -9,4 +9,5 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^spell/', SpellCorrectorView.as_view()),
+    url(r'^feedback/', FeedbackView.as_view()),
 ]
