@@ -1,7 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from api.views import SpellCorrectorView, FeedbackView
-
+from django.conf import settings
 urlpatterns = [
     # Examples:
     # url(r'^$', 'spell.views.home', name='home'),

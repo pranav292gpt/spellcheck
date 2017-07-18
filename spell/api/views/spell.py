@@ -16,10 +16,12 @@ class SpellCorrectorView(APIView):
             positions = []
 
             #Getting correct words
+
             for word in input_words:
                 correct_words.append(correction(word))
 
             def pos(n):
+
                 if n ==0:
                     return 1
                 return pos(n-1)+len(input_words[n-1])+1
@@ -31,7 +33,7 @@ class SpellCorrectorView(APIView):
                     "id" : i,
                     "word" :word,
                     "correction": c,
-                    "extended_corrections": extended_corrections(word),
+                    #"extended_corrections": extended_corrections(word),
                     "position" : pos(i)
                         })
 

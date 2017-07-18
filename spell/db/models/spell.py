@@ -6,5 +6,4 @@ class WordFrequency(models.Model):
 
 class BigWordFrequency(models.Model):
     word = models.CharField(max_length=64, db_index=True)
-    frequency = models.BigIntegerField()
-
+    frequency = models.BigIntegerField(db_index=True)
